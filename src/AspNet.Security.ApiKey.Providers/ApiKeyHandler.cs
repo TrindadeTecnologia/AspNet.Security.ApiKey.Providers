@@ -1,12 +1,13 @@
-﻿using System;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using AspNet.Security.ApiKey.Providers.Abstractions;
+﻿using AspNet.Security.ApiKey.Providers.Abstractions;
 using AspNet.Security.ApiKey.Providers.Events;
 using AspNet.Security.ApiKey.Providers.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Security.Claims;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace AspNet.Security.ApiKey.Providers
 {
@@ -41,21 +42,22 @@ namespace AspNet.Security.ApiKey.Providers
                     if (header.StartsWith(this.Options.HeaderKey, StringComparison.OrdinalIgnoreCase))
                     {
                         apiKey = header.Substring(this.Options.HeaderKey.Length).Trim();
+
+                        var validateApiKeyContext = new ApiKeyValidatedContext(this.Context, this.Scheme, this.Options)
+                        {
+                            ApiKey = apiKey,
+                            Principal = new ClaimsPrincipal()
+                        };
+
+                        await this.Events.ApiKeyValidated(validateApiKeyContext);
+
+                        if (validateApiKeyContext.Result != null)
+                        {
+                            this.Logger.ApiKeyValidationSucceeded();
+
+                            return validateApiKeyContext.Result;
+                        }
                     }
-                }
-
-                var validateApiKeyContext = new ApiKeyValidatedContext(this.Context, this.Scheme, this.Options)
-                {
-                    ApiKey = apiKey
-                };
-
-                await this.Events.ApiKeyValidated(validateApiKeyContext);
-
-                if (validateApiKeyContext.Result != null)
-                {
-                    this.Logger.ApiKeyValidationSucceeded();
-
-                    return validateApiKeyContext.Result;
                 }
 
                 this.Logger.ApiKeyValidationFailed();
