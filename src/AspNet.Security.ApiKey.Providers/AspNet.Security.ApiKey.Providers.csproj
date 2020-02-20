@@ -5,9 +5,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>James Harling</Authors>
     <Company>James Harling</Company>
-    <PackageLicenseUrl>https://github.com/jamesharling/AspNet.Security.ApiKey.Providers/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/jamesharling/AspNet.Security.ApiKey.Providers</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/jamesharling/AspNet.Security.ApiKey.Providers</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/trindadetecnologia/AspNet.Security.ApiKey.Providers/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/trindadetecnologia/AspNet.Security.ApiKey.Providers</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/trindadetecnologia/AspNet.Security.ApiKey.Providers</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>aspnetcore authentication security api key apikey auth core middleware</PackageTags>
     <Description>API Key authentication middleware for ASP.NET Core.</Description>
